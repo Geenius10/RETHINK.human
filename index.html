@@ -1,56 +1,137 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#f5f1f8">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="RETHINK. LingoDeck">
-  <title>RETHINK. LingoDeck</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icons/icon-192.svg">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#f5f2ea">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="logo.svg">
+<title>HUMAN.</title>
+<style>
+:root{--paper:#f5f2ea;--ink:#111214;--blue:#1646d8;--blue2:#dce5ff;--red:#d43b32;--line:#d4d0c7;--muted:#73716c;--white:#fff}
+*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:100%;overscroll-behavior:none}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:860px;margin:auto;min-height:100dvh;padding:22px 18px 96px}
+header{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--ink);margin-bottom:30px}
+.brand{font-weight:900;font-size:27px;letter-spacing:-1px}.edition{font:700 10px monospace;letter-spacing:1px;color:var(--muted)}
+h1{font-size:54px;line-height:.88;letter-spacing:-3.5px;margin:0 0 12px}h2{font-size:25px;letter-spacing:-1.3px;margin:0}h3{font-size:18px;margin:0 0 5px}.lead{font-size:17px;line-height:1.45;color:#454542;max-width:620px;margin:0 0 28px}
+.kicker{font:800 10px monospace;letter-spacing:1.7px;text-transform:uppercase;color:var(--blue);margin-bottom:8px}.muted{color:var(--muted)}.small{font-size:12px}
+.screen{display:none}.screen.active{display:block}.section{padding:24px 0;border-top:1px solid var(--line)}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:15px}
+.btn{border:1px solid var(--ink);background:transparent;color:var(--ink);padding:11px 14px;font-weight:800;font-size:11px;letter-spacing:.5px;text-transform:uppercase}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn.ghost{border-color:var(--line)}.btn.reject{color:var(--red);border-color:var(--red)}
+.hero{padding:0 0 30px}.todayline{border-left:2px solid var(--ink);margin-left:10px;padding-left:25px}.task{position:relative;padding:0 0 26px}.task:before{content:"";position:absolute;left:-31px;top:4px;width:10px;height:10px;background:var(--paper);border:2px solid var(--blue);border-radius:50%}.task.done:before{background:var(--blue)}
+.time{font:800 10px monospace;color:var(--muted);letter-spacing:1px;margin-bottom:5px}.task p{margin:6px 0 10px;line-height:1.4;color:#555}
+.planbar{display:grid;grid-template-columns:80px 1fr;gap:14px;padding:14px 0;border-top:1px solid var(--line)}.bararea{position:relative;height:40px;background:linear-gradient(to right,transparent 24.8%,var(--line) 25%,transparent 25.2%,transparent 49.8%,var(--line) 50%,transparent 50.2%,transparent 74.8%,var(--line) 75%,transparent 75.2%)}.bar{position:absolute;top:10px;height:18px;background:var(--blue)}.bar.base{background:var(--ink)}.weekrow{display:grid;grid-template-columns:80px repeat(4,1fr);font:700 9px monospace;color:var(--muted);padding-bottom:7px}
+.suggestion{padding:20px 0;border-top:1px solid var(--ink)}.suggestion .why{max-width:620px;line-height:1.45;color:#50504d}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.library{display:grid;gap:0}.exp{padding:17px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start}.idx{font:800 13px monospace;color:var(--blue)}.badge{font:800 9px monospace;padding:5px 7px;border:1px solid var(--line);white-space:nowrap}.exp p{margin:5px 0;color:#5c5a56;font-size:13px;line-height:1.35}
+.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:14px}.tabs button{white-space:nowrap}
+.finding{padding:17px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:10px}.finding b{font-size:17px}.resultgood{color:var(--blue);font:800 10px monospace}.resultbad{color:var(--red);font:800 10px monospace}
+nav{position:fixed;bottom:0;left:0;right:0;background:#f5f2eaf5;border-top:1px solid var(--ink);z-index:10}nav div{max-width:860px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr)}nav button{border:0;background:none;padding:18px 4px;font:800 11px monospace;color:var(--muted)}nav button.active{color:var(--blue)}
+.modal{display:none;position:fixed;inset:0;background:#11121466;z-index:20;align-items:flex-end}.modal.open{display:flex}.sheet{background:var(--paper);width:min(860px,100%);margin:auto;padding:25px 20px 32px;max-height:91dvh;overflow:auto;border-top:4px solid var(--blue)}
+.sheet h2{font-size:34px;margin-bottom:8px}.step{padding:15px 0;border-top:1px solid var(--line)}label{display:block;font:800 10px monospace;text-transform:uppercase;letter-spacing:1px;margin:14px 0 7px}
+input[type=range]{width:100%;accent-color:var(--blue)}input[type=number],input[type=text],select,textarea{width:100%;border:1px solid var(--ink);background:white;padding:12px;color:var(--ink)}textarea{min-height:70px}
+.warning{border-left:3px solid var(--red);padding:4px 0 4px 13px;margin:15px 0}.info{border-left:3px solid var(--blue);padding:4px 0 4px 13px;margin:15px 0}.empty{padding:20px 0;color:var(--muted)}
+.scoreline{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.bigvalue{font-size:42px;font-weight:900;letter-spacing:-2px}
+@media(min-width:700px){.app{padding-left:28px;padding-right:28px}.library.cols{grid-template-columns:1fr 1fr;column-gap:32px}.library.cols .exp:nth-child(2){border-top:1px solid var(--line)}}
+</style>
 </head>
 <body>
-  <div id="appShell" class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-kicker">RETHINK.</div>
-        <h1 id="pageTitle">LingoDeck</h1>
-      </div>
-      <button id="themeToggle" class="icon-button theme-toggle" aria-label="Dark Mode umschalten">◐</button>
-    </header>
+<main class="app">
+<header><div class="brand">HUMAN.</div><div class="edition">PERSONAL OPTIMIZATION / 2026</div></header>
 
-    <main id="view"></main>
+<section id="today" class="screen active">
+<div class="hero"><div class="kicker">Heute · <span id="dateShort"></span></div><h1>DEIN TAG.</h1><p class="lead">Nur das, was heute relevant ist. HUMAN führt dich durch laufende Tests und Routinen.</p></div>
+<div id="todayTasks" class="todayline"></div>
+<div class="section"><div class="sectionhead"><h2>Danach</h2><span class="small muted">Nächster sinnvoller Schritt</span></div><div id="nextSuggestion"></div></div>
+</section>
 
-    <nav class="tabbar" aria-label="Hauptnavigation">
-      <button class="tab active" data-route="home">
-        <span class="tab-icon icon-home" aria-hidden="true"></span>
-        <span>Start</span>
-      </button>
-      <button class="tab" data-route="cards">
-        <span class="tab-icon icon-cards" aria-hidden="true"></span>
-        <span>Karten</span>
-      </button>
-      <button class="tab" data-route="learn">
-        <span class="tab-icon icon-learn" aria-hidden="true"></span>
-        <span>Lernen</span>
-      </button>
-      <button class="tab" data-route="stats">
-        <span class="tab-icon icon-progress" aria-hidden="true"></span>
-        <span>Fortschritt</span>
-      </button>
-    </nav>
-  </div>
+<section id="plan" class="screen">
+<div class="hero"><div class="kicker">Rollierender Zeitplan</div><h1>28 TAGE.</h1><p class="lead">Fundament zuerst. Danach gezielte Optimierung. Parallele Tests nur, wenn ihre Ergebnisse sinnvoll trennbar bleiben.</p></div>
+<div class="weekrow"><span></span><span>WOCHE 1</span><span>WOCHE 2</span><span>WOCHE 3</span><span>WOCHE 4</span></div>
+<div id="timeline"></div>
+<div class="section"><div class="sectionhead"><h2>Empfohlen</h2><span class="small muted">Du entscheidest</span></div><div id="recommendations"></div></div>
+<div class="section"><div class="sectionhead"><h2>Alle Experimente</h2><span class="small muted">Evidenzgeordnet</span></div><div class="tabs" id="filters"></div><div class="library cols" id="library"></div></div>
+</section>
 
-  <dialog id="modal">
-    <form id="modalBody" class="modal-card"></form>
-  </dialog>
+<section id="me" class="screen">
+<div class="hero"><div class="kicker">Persönliche Erkenntnisse</div><h1>WAS WIRKT.</h1><p class="lead">Keine Punktejagd. Hier bleibt nur, was du tatsächlich über dich gelernt hast.</p></div>
+<div class="section"><div class="sectionhead"><h2>Erkenntnisse</h2></div><div id="findings"></div></div>
+<div class="section"><div class="sectionhead"><h2>Meine Routinen</h2></div><div id="routineList"></div></div>
+<div class="section"><div class="sectionhead"><h2>Nicht vorschlagen</h2></div><div id="rejected"></div></div>
+</section>
+</main>
 
-  <input id="backupInput" type="file" accept="application/json,.json" hidden>
-  <div id="toast" class="toast" role="status"></div>
+<nav><div><button class="active" data-s="today" onclick="show('today')">HEUTE</button><button data-s="plan" onclick="show('plan')">PLAN</button><button data-s="me" onclick="show('me')">ICH</button></div></nav>
+<div id="modal" class="modal"><div id="sheet" class="sheet"></div></div>
 
-  <script src="app.js"></script>
-</body>
-</html>
+<script>
+const E=[
+{id:"wake",n:"Konstante Aufstehzeit",tier:1,g:["Schlaf","Energie"],ev:"STARK",days:14,base:5,type:"sleep",metric:"Morgenenergie",p:"Jeden Tag innerhalb eines 30-Minuten-Fensters aufstehen.",why:"Ein stabiles Schlaf-Wach-Timing ist ein sinnvoller Ausgangspunkt, bevor feinere Schlaf-Hacks getestet werden."},
+{id:"caffeine",n:"Koffein-Cutoff",tier:1,g:["Schlaf","Energie"],ev:"STARK",days:14,base:5,type:"sleep",metric:"Schlaf",p:"Kein Koffein in den letzten 6 Stunden vor deiner üblichen Schlafenszeit.",why:"Spätes Koffein kann Schlaf beeinträchtigen. Ein sauberer Vorher/Nachher-Test ist gut möglich."},
+{id:"walk",n:"Walk nach Mahlzeit",tier:1,g:["Stoffwechsel","Energie"],ev:"STARK",days:14,base:3,type:"prepost",metric:"Energie nach Essen",p:"Nach einer Hauptmahlzeit 10 Minuten locker gehen.",why:"Postprandiale Bewegung ist ein einfacher, gut untersuchter metabolischer Hebel."},
+{id:"breaks",n:"Sitzpausen",tier:1,g:["Stoffwechsel","Energie"],ev:"STARK",days:14,base:3,type:"daily",metric:"Tagesenergie",p:"Langes Sitzen regelmäßig 2–5 Minuten durch Gehen unterbrechen.",why:"Aktivitätspausen sind sinnvoller als lange ununterbrochene Sitzphasen."},
+{id:"light",n:"Morgenlicht",tier:1,g:["Schlaf","Energie"],ev:"SOLIDE",days:14,base:5,type:"sleep",metric:"Morgenenergie",p:"10–20 Minuten draußen innerhalb der ersten Stunde nach dem Aufstehen.",why:"Licht ist ein zentraler Zeitgeber für den circadianen Rhythmus."},
+{id:"water",n:"Trinkroutine",tier:1,g:["Energie","Ernährung"],ev:"BASIS",days:14,base:3,type:"daily",metric:"Energie",p:"Eine konstante, angemessene Trinkroutine über den Tag etablieren.",why:"Vor allem relevant, wenn Trinken bisher unregelmäßig ist."},
+{id:"protein",n:"Proteinreiches Frühstück",tier:1,g:["Ernährung","Sättigung"],ev:"SOLIDE",days:14,base:3,type:"prepost",metric:"Sättigung",p:"Frühstück mit klarer Proteinquelle testen.",why:"Ein einfaches Experiment für Hunger und Sättigung."},
+{id:"breath",n:"Langsame Atmung",tier:2,g:["Stress","Schlaf"],ev:"SOLIDE",days:7,base:0,type:"acute",metric:"Stress",p:"5 Minuten ruhig atmen: ca. 4 s ein, 6 s aus.",why:"Ideal als akuter Vorher/Nachher-Test statt als generischer Tages-Score."},
+{id:"nap",n:"Powernap",tier:2,g:["Energie","Fokus"],ev:"SOLIDE",days:7,base:0,type:"acute",metric:"Energie",p:"10–20 Minuten früher am Nachmittag.",why:"Wachheit lässt sich direkt vor und nach dem Nap vergleichen."},
+{id:"wind",n:"Wind-down Routine",tier:2,g:["Schlaf","Stress"],ev:"SOLIDE",days:14,base:5,type:"sleep",metric:"Einschlafen",p:"30 Minuten vor dem Schlafen eine ruhige, wiederholbare Routine.",why:"Ein sinnvoller Schlafhygiene-Baustein."},
+{id:"cool",n:"Schlafraum optimieren",tier:2,g:["Schlaf"],ev:"SOLIDE",days:14,base:5,type:"sleep",metric:"Schlafqualität",p:"Temperatur, Licht und störende Geräusche konsequent optimieren.",why:"Bündelt die grundlegenden Umweltfaktoren des Schlafs."},
+{id:"mind",n:"Achtsamkeit",tier:2,g:["Stress","Fokus"],ev:"SOLIDE",days:14,base:3,type:"prepost",metric:"Stress",p:"10 Minuten Achtsamkeitsmeditation.",why:"Stress vor und nach der Einheit sowie im Tagesverlauf beobachten."},
+{id:"phone",n:"Handyfreier Morgen",tier:2,g:["Fokus","Stress"],ev:"EXPERIMENTELL",days:14,base:3,type:"daily",metric:"Fokus",p:"Erste 30 Minuten nach dem Aufstehen ohne Social Media oder News.",why:"Ein persönliches Verhaltens-A/B-Experiment, kein physiologisches Wundermittel."},
+{id:"creatine",n:"Kreatin",tier:3,g:["Leistung"],ev:"STARK",days:28,base:7,type:"performance",metric:"Trainingsleistung",p:"Tägliche Einnahme nach geeignetem persönlichen Plan; Leistung in wiederkehrenden Übungen dokumentieren.",why:"Für sportliche Leistung sinnvoll langfristiger zu testen als über Tagesbefinden."},
+{id:"cold",n:"Kaltwasser",tier:3,g:["Regeneration"],ev:"BEGRENZT",days:14,base:3,type:"prepost",metric:"Muskelkater",p:"Gezielt nach ausgewählten Belastungen moderat testen.",why:"Kein Universal-Hack. Sinnvoll nur mit klarer Recovery-Frage."},
+{id:"heat",n:"Wärme / Sauna",tier:3,g:["Regeneration","Stress"],ev:"SOLIDE",days:21,base:5,type:"daily",metric:"Erholung",p:"Konstante verträgliche Wärmeroutine.",why:"Als Recovery-/Entspannungsintervention individuell testbar."},
+{id:"trainingtime",n:"Trainingszeitpunkt",tier:3,g:["Leistung","Schlaf"],ev:"BEGRENZT",days:21,base:0,type:"ab",metric:"Trainingsleistung",p:"Vergleichbare Einheiten in zwei Zeitfenstern testen.",why:"Ein echter A/B-Test ist sinnvoller als eine allgemeine Bewertung."},
+{id:"tre",n:"Essensfenster",tier:4,g:["Ernährung","Gewicht"],ev:"SOLIDE",days:21,base:5,type:"daily",metric:"Hunger",p:"Ein konstantes, alltagstaugliches Essensfenster testen.",why:"Kann nützlich sein, ist aber kein automatischer Vorteil für jeden."},
+{id:"screen",n:"Abendliche Bildschirmreduktion",tier:4,g:["Schlaf"],ev:"BEGRENZT",days:14,base:5,type:"sleep",metric:"Einschlafen",p:"Letzte 60 Minuten vor dem Schlafen Bildschirmnutzung deutlich reduzieren.",why:"Als Teil des gesamten Abendverhaltens testen, nicht als isolierten Mythos."},
+{id:"music",n:"Fokus mit / ohne Musik",tier:4,g:["Fokus"],ev:"EXPERIMENTELL",days:7,base:0,type:"ab",metric:"Fokusleistung",p:"Gleiche Arbeitsblöcke mit und ohne Musik vergleichen.",why:"Stark individuell und deshalb ideal für einen persönlichen A/B-Test."}
+];
+let S=JSON.parse(localStorage.getItem("human_v6")||'{"studies":[],"routines":[],"rejected":[],"postponed":[],"logs":[],"done":{},"filter":"Alle"}');
+const save=()=>{localStorage.setItem("human_v6",JSON.stringify(S));render()},D=()=>new Date().toISOString().slice(0,10);
+dateShort.textContent=new Intl.DateTimeFormat("de-DE",{weekday:"long",day:"2-digit",month:"long"}).format(new Date()).toUpperCase();
+function show(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.s===id));render()}
+function openM(h){sheet.innerHTML=h;modal.classList.add("open")}function closeM(){modal.classList.remove("open")}modal.onclick=e=>{if(e.target===modal)closeM()}
+function active(){return S.studies.filter(s=>!s.finished)} function ex(id){return E.find(e=>e.id===id)}
+function conflict(e){return active().filter(s=>ex(s.eid).g.some(g=>e.g.includes(g)))}
+function elapsed(s){return Math.max(1,Math.floor((Date.now()-s.start)/86400000)+1)}
+function taskFor(s){let e=ex(s.eid),ph=elapsed(s)<=s.base?"Baseline":"Testphase";return {time:e.type==="sleep"?"MORGENS":e.id==="caffeine"?"TAGESZEIT":e.type==="performance"?"TRAINING":e.type==="acute"?"FLEXIBEL":"HEUTE",title:e.n,desc:ph+" · Tag "+Math.min(elapsed(s),s.base+s.days)+"/"+(s.base+s.days),s}}
+function render(){
+ let tasks=active().map(taskFor);
+ todayTasks.innerHTML=tasks.length?tasks.map(t=>`<div class="task ${S.done[D()+"_"+t.s.uid]?"done":""}"><div class="time">${t.time}</div><h3>${t.title}</h3><p>${t.desc}</p><div class="actions"><button class="btn primary" onclick="measure('${t.s.uid}')">${S.done[D()+"_"+t.s.uid]?"ERFASST":"ÖFFNEN"}</button></div></div>`).join(""):`<div class="task"><div class="time">START</div><h3>Noch kein Experiment aktiv</h3><p>Wähle im Plan einen sinnvollen ersten Test.</p><button class="btn primary" onclick="show('plan')">Zum Plan</button></div>`;
+ let next=ranked()[0];nextSuggestion.innerHTML=next?suggestHTML(next,true):`<div class="empty">Aktuell keine weitere Empfehlung.</div>`;
+ timeline.innerHTML=active().length?active().map(s=>{let e=ex(s.eid),tot=s.base+s.days,b=Math.min(100,s.base/tot*100);return `<div class="planbar"><div><b>${e.n}</b><div class="small muted">${tot} Tage</div></div><div class="bararea"><i class="bar base" style="left:0;width:${b}%"></i><i class="bar" style="left:${b}%;width:${100-b}%"></i></div></div>`}).join(""):`<div class="empty">Noch keine laufenden Studien. Unten findest du die sinnvollsten Startpunkte.</div>`;
+ recommendations.innerHTML=ranked().slice(0,3).map(e=>suggestHTML(e,false)).join("");
+ let fs=["Alle","Schlaf","Energie","Stress","Fokus","Leistung","Regeneration","Ernährung"];filters.innerHTML=fs.map(f=>`<button class="btn ${S.filter===f?"primary":"ghost"}" onclick="S.filter='${f}';save()">${f}</button>`).join("");
+ let lib=E.filter(e=>!S.rejected.includes(e.id)&&(S.filter==="Alle"||e.g.includes(S.filter))).sort((a,b)=>a.tier-b.tier);
+ library.innerHTML=lib.map((e,i)=>`<div class="exp"><div class="idx">${String(i+1).padStart(2,"0")}</div><div><h3>${e.n}</h3><p>${e.g.join(" · ")} · ${e.days} Tage</p><p>${e.why}</p><div class="actions"><button class="btn primary" onclick="propose('${e.id}')">Testen</button><button class="btn ghost" onclick="info('${e.id}')">Info</button></div></div><div class="badge">${e.ev}</div></div>`).join("");
+ let fin=S.studies.filter(s=>s.finished);
+ findings.innerHTML=fin.length?fin.map(s=>`<div class="finding"><div><b>${ex(s.eid).n}</b><div class="small muted">${s.note||"Experiment abgeschlossen"}</div></div><span class="${s.result==="BEHALTEN"?"resultgood":s.result==="VERWERFEN"?"resultbad":"muted small"}">${s.result}</span></div>`).join(""):`<div class="empty">Noch keine abgeschlossenen Experimente.</div>`;
+ routineList.innerHTML=S.routines.length?S.routines.map((r,i)=>`<div class="finding"><div><b>${r.name}</b><div class="small muted">${r.protocol}</div></div><button class="btn ghost" onclick="S.routines.splice(${i},1);save()">Entfernen</button></div>`).join(""):`<div class="empty">Was sich bewährt, landet hier.</div>`;
+ rejected.innerHTML=S.rejected.length?S.rejected.map(id=>`<div class="finding"><div><b>${ex(id)?.n||id}</b><div class="small muted">Wird nicht mehr automatisch empfohlen.</div></div><button class="btn ghost" onclick="allow('${id}')">Wieder zulassen</button></div>`).join(""):`<div class="empty">Keine abgelehnten Experimente.</div>`;
+}
+function ranked(){let ids=new Set(active().map(s=>s.eid));return E.filter(e=>!ids.has(e.id)&&!S.rejected.includes(e.id)&&!S.postponed.includes(e.id)).sort((a,b)=>a.tier-b.tier)}
+function suggestHTML(e,compact){return `<div class="suggestion"><div class="kicker">ALS NÄCHSTES EMPFOHLEN · ${e.ev}</div><h3>${e.n}</h3><p class="why">${e.why}</p><div class="small muted">${e.days} Tage · ${e.g.join(" / ")}</div><div class="actions"><button class="btn primary" onclick="propose('${e.id}')">Testen</button><button class="btn ghost" onclick="later('${e.id}')">Später</button><button class="btn reject" onclick="rejectAsk('${e.id}')">Ablehnen</button></div></div>`}
+function info(id){let e=ex(id);openM(`<div class="kicker">LEVEL ${e.tier} · ${e.ev}</div><h2>${e.n}</h2><p>${e.why}</p><div class="step"><label>Protokoll</label><p>${e.p}</p></div><div class="step"><label>Dauer</label><p>${e.base?e.base+" Tage Baseline + ":""}${e.days} Tage Testphase</p></div><div class="step"><label>Gemessen wird</label><p>${e.metric}</p></div><div class="actions"><button class="btn primary" onclick="propose('${id}')">Planen</button><button class="btn ghost" onclick="closeM()">Schließen</button></div>`)}
+function propose(id){let e=ex(id),c=conflict(e);openM(`<div class="kicker">PLANVORSCHLAG</div><h2>${e.n}</h2><p>${e.p}</p>${c.length?`<div class="warning"><b>Überschneidung</b><p>${c.map(s=>ex(s.eid).n).join(", ")} betrifft einen ähnlichen Zielbereich. Parallel ist möglich, aber die Ursache eines Effekts wird schwerer zu trennen.</p></div>`:`<div class="info"><b>Parallel sinnvoll</b><p>Kein offensichtlicher Konflikt mit deinen laufenden Experimenten.</p></div>`}<div class="step"><b>${e.base?e.base+" Tage Baseline → ":""}${e.days} Tage Test</b><p class="muted">HUMAN zeigt dir jeden Tag nur die dafür nötige Aktion.</p></div><div class="actions"><button class="btn primary" onclick="start('${id}')">In Plan aufnehmen</button><button class="btn ghost" onclick="later('${id}')">Später</button><button class="btn reject" onclick="rejectAsk('${id}')">Ablehnen</button></div>`)}
+function start(id){let e=ex(id);S.studies.push({uid:crypto.randomUUID(),eid:id,start:Date.now(),base:e.base,days:e.days,values:[],finished:false});S.postponed=S.postponed.filter(x=>x!==id);closeM();save();show("today")}
+function later(id){if(!S.postponed.includes(id))S.postponed.push(id);closeM();save()}
+function rejectAsk(id){let e=ex(id);openM(`<div class="kicker">NICHT VORSCHLAGEN</div><h2>${e.n}</h2><p>Warum passt das für dich nicht? Die Angabe ist optional.</p><div class="actions">${["Kein Interesse","Zu aufwendig","Zu teuer","Unangenehm","Schon getestet","Medizinischer Grund"].map(r=>`<button class="btn ghost" onclick="reject('${id}','${r}')">${r}</button>`).join("")}</div><div class="actions"><button class="btn reject" onclick="reject('${id}','')">Ohne Grund ablehnen</button></div>`)}
+function reject(id,reason){if(!S.rejected.includes(id))S.rejected.push(id);S.postponed=S.postponed.filter(x=>x!==id);localStorage.setItem("human_reject_"+id,reason);closeM();save()}
+function allow(id){S.rejected=S.rejected.filter(x=>x!==id);save()}
+function measure(uid){let s=S.studies.find(x=>x.uid===uid),e=ex(s.eid),base=elapsed(s)<=s.base;if(base){return generic(uid,`Baseline: ${e.metric}`,`Noch nichts verändern. Erfasse nur deinen Ausgangswert.`)}
+ if(e.type==="acute"||e.type==="prepost")return prepost(uid,e);
+ if(e.type==="sleep")return sleepForm(uid,e);
+ if(e.type==="performance")return performance(uid,e);
+ if(e.type==="ab")return abForm(uid,e);
+ return generic(uid,e.metric,e.p)
+}
+function generic(uid,title,instruction){openM(`<div class="kicker">HEUTIGE MESSUNG</div><h2>${title}</h2><p>${instruction}</p><label>Wert · <b id="vv">5</b>/10</label><input id="v" type="range" min="1" max="10" value="5" oninput="vv.textContent=this.value"><label>Notiz optional</label><textarea id="note"></textarea><button class="btn primary" onclick="saveMeasure('${uid}',{v:+v.value,note:note.value})">Speichern</button>`)}
+function prepost(uid,e){openM(`<div class="kicker">VORHER / NACHHER</div><h2>${e.n}</h2><p>${e.p}</p><label>${e.metric} vorher · <b id="av">5</b>/10</label><input id="a" type="range" min="1" max="10" value="5" oninput="av.textContent=this.value"><label>${e.metric} danach · <b id="bv">5</b>/10</label><input id="b" type="range" min="1" max="10" value="5" oninput="bv.textContent=this.value"><button class="btn primary" onclick="saveMeasure('${uid}',{before:+a.value,after:+b.value})">Speichern</button>`)}
+function sleepForm(uid,e){openM(`<div class="kicker">SCHLAFPROTOKOLL</div><h2>${e.n}</h2><p>${e.p}</p><label>Einschlafdauer in Minuten</label><input id="lat" type="number" min="0" value="20"><label>Schlafqualität · <b id="sqv">7</b>/10</label><input id="sq" type="range" min="1" max="10" value="7" oninput="sqv.textContent=this.value"><label>Morgenenergie · <b id="mev">7</b>/10</label><input id="me" type="range" min="1" max="10" value="7" oninput="mev.textContent=this.value"><button class="btn primary" onclick="saveMeasure('${uid}',{lat:+lat.value,sleep:+sq.value,morning:+me.value})">Speichern</button>`)}
+function performance(uid,e){openM(`<div class="kicker">TRAINING</div><h2>${e.n}</h2><p>${e.p}</p><label>Übung</label><input id="exercise" type="text" placeholder="z. B. Squat"><label>Gewicht / Leistung</label><input id="load" type="number" step=".1"><label>Wiederholungen</label><input id="reps" type="number"><label>RPE · <b id="rpev">8</b>/10</label><input id="rpe" type="range" min="1" max="10" value="8" oninput="rpev.textContent=this.value"><button class="btn primary" onclick="saveMeasure('${uid}',{exercise:exercise.value,load:+load.value,reps:+reps.value,rpe:+rpe.value})">Speichern</button>`)}
+function abForm(uid,e){openM(`<div class="kicker">A / B VERGLEICH</div><h2>${e.n}</h2><p>${e.p}</p><label>Heute</label><select id="variant"><option>A</option><option>B</option></select><label>${e.metric} · <b id="vv">5</b>/10</label><input id="v" type="range" min="1" max="10" value="5" oninput="vv.textContent=this.value"><button class="btn primary" onclick="saveMeasure('${uid}',{variant:variant.value,v:+v.value})">Speichern</button>`)}
+function saveMeasure(uid,data){let s=S.studies.find(x=>x.uid===uid);s.values=s.values.filter(x=>x.date!==D());s.values.push({date:D(),t:Date.now(),...data});S.done[D()+"_"+uid]=true;closeM();if(elapsed(s)>=s.base+s.days)finishPrompt(uid);else save()}
+function finishPrompt(uid){let s=S.studies.find(x=>x.uid===uid),e=ex(s.eid);openM(`<div class="kicker">STUDIE ABGESCHLOSSEN</div><h2>${e.n}</h2><p>Du hast den geplanten Zeitraum erreicht. Entscheide anhand deiner Daten und deines Eindrucks, ob die Intervention in deinen Alltag gehört.</p><label>Kurze Erkenntnis</label><textarea id="insight" placeholder="Was hast du bemerkt?"></textarea><div class="actions"><button class="btn primary" onclick="finish('${uid}','BEHALTEN')">Behalten</button><button class="btn ghost" onclick="finish('${uid}','UNKLAR')">Unklar</button><button class="btn reject" onclick="finish('${uid}','VERWERFEN')">Verwerfen</button></div>`)}
+function finish(uid,result){let s=S.studies.find(x=>x.uid===uid),e=ex(s.eid);s.finished=true;s.result=result;s.note=(document.getElementById("insight")||{}).value||"";if(result==="BEHALTEN"&&!S.routines.some(r=>r.eid===e.id))S.routines.push({eid:e.id,name:e.n,protocol:e.p});closeM();save();show("me")}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js");render();
+</script>
+</body></html>
