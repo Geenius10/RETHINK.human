@@ -3,8 +3,8 @@
   "short_name": "HUMAN.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f5f2ea",
-  "theme_color": "#f5f2ea",
+  "background_color": "#11110f",
+  "theme_color": "#11110f",
   "icons": [
     {
       "src": "logo.svg",
